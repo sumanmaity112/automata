@@ -9,7 +9,7 @@ public class States {
         this.states = states;
     }
 
-    public ArrayList<State> getStates() {
-        return states;
+    public boolean contains(State state) {
+        return states.contains(state);
     }
 }

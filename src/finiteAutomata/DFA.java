@@ -2,9 +2,7 @@ package finiteAutomata;
 
 import tuples.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class DFA {
     private final States states;
@@ -28,14 +26,13 @@ public class DFA {
 
     private boolean isValid(Alphabet[] inputs) {
         State currentState = initialState;
-            ArrayList<State> allStates = this.states.getStates();
         for (Alphabet input : inputs) {
             currentState = findNextState(currentState, input);
-            if(!allStates.contains(currentState)){
+            if (!this.states.contains(currentState)) {
                 throw new RuntimeException("Please check your transitions table");
             }
         }
-        return finalStates.getFinalStates().contains(currentState);
+        return finalStates.contains(currentState);
     }
 
     private boolean generateErrorMessage(Alphabet[] inputs) {
@@ -51,9 +48,8 @@ public class DFA {
     }
 
     private boolean isValidInput(Alphabet[] inputs) {
-        HashSet<Alphabet> alphabets = alphabetSet.getAlphabets();
         for (Alphabet input : inputs) {
-            if (!(alphabets.contains(input))) {
+            if (!(alphabetSet.contains(input))) {
                 return false;
             }
         }

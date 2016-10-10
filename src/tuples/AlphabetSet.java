@@ -10,7 +10,7 @@ public class AlphabetSet {
         this.alphabets = new HashSet<>(alphabets);
     }
 
-    public HashSet<Alphabet> getAlphabets() {
-        return alphabets;
+    public boolean contains(Alphabet input) {
+        return alphabets.contains(input);
     }
 }

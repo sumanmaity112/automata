@@ -10,7 +10,7 @@ public class FinalStates {
         this.finalStates = new HashSet<State>(states);
     }
 
-    public HashSet<State> getFinalStates() {
-        return finalStates;
+    public boolean contains(State state) {
+        return finalStates.contains(state);
     }
 }

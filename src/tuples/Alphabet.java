@@ -7,10 +7,6 @@ public class Alphabet {
         this.alphabet = alphabet;
     }
 
-    public String getAlphabet() {
-        return alphabet;
-    }
-
     @Override
     public String toString() {
         return alphabet;
