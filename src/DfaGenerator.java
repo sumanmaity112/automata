@@ -2,7 +2,6 @@ import finiteAutomata.DFA;
 import tuples.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DfaGenerator {
     public static void main(String[] args) {
@@ -26,10 +25,10 @@ public class DfaGenerator {
         ArrayList<State> finalStates = new ArrayList<>();
         finalStates.add(q0);
 
-        HashMap<State, HashMap<Alphabet, State>> transitions = new HashMap<>();
-        HashMap<Alphabet, State> q0Transition = new HashMap<>();
-        HashMap<Alphabet, State> q1Transition = new HashMap<>();
-        HashMap<Alphabet, State> q2Transition = new HashMap<>();
+        Transitions transitions = new Transitions();
+        Transition q0Transition = new Transition();
+        Transition q1Transition = new Transition();
+        Transition q2Transition = new Transition();
 
         q0Transition.put(alphabet0, q0);
         q0Transition.put(alphabet1, q1);

@@ -7,7 +7,6 @@ import org.junit.rules.ExpectedException;
 import tuples.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -17,7 +16,7 @@ public class DFATest {
     private State q0, q1, q2;
     private State initialState;
     private ArrayList<State> states, finalStates;
-    private HashMap<State, HashMap<Alphabet, State>> transitions;
+    private Transitions transitions;
     private AlphabetSet alphabetSet;
 
     @Rule
@@ -47,11 +46,11 @@ public class DFATest {
         finalStates = new ArrayList<>();
         finalStates.add(q0);
 
-        transitions = new HashMap<>();
-        HashMap<Alphabet, State> q0Transition = new HashMap<>();
-        HashMap<Alphabet, State> q1Transition = new HashMap<>();
-        HashMap<Alphabet, State> q2Transition = new HashMap<>();
+        transitions = new Transitions();
 
+        Transition q0Transition = new Transition();
+        Transition q1Transition = new Transition();
+        Transition q2Transition = new Transition();
         q0Transition.put(alphabet0, q0);
         q0Transition.put(alphabet1, q1);
         q0Transition.put(alphabet2, q2);
@@ -96,15 +95,17 @@ public class DFATest {
 
     @Test
     public void testIsRecognizeShouldThrowARuntimeExceptionForInvalidStateInGivenTransitionTable() throws Exception {
-        HashMap<Alphabet, State> q3Transition = new HashMap<>();
-
+        Transition q3Transition = new Transition();
         q3Transition.put(alphabet0, q0);
         q3Transition.put(alphabet1, q1);
         q3Transition.put(alphabet2, q2);
-        HashMap<Alphabet, State> q1State = transitions.get(q1);
-        q1State.remove(alphabet0, q2);
+
+        State q1State = transitions.get(q1, alphabet0);
+        Transition transition = new Transition();
+
         State q3 = new State("q3");
-        q1State.put(alphabet0, q3);
+        transition.put(alphabet0, q3);
+        transitions.put(q1State, transition);
         transitions.put(q3, q3Transition);
 
         DFA dfa = new DFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);

@@ -9,9 +9,9 @@ public class DFA {
     private final State initialState;
     private final AlphabetSet alphabetSet;
     private final FinalStates finalStates;
-    private HashMap<State, HashMap<Alphabet, State>> transitions;
+    private Transitions transitions;
 
-    public DFA(States states, State initialState, AlphabetSet alphabetSet, FinalStates finalStates, HashMap<State, HashMap<Alphabet, State>> transitions) {
+    public DFA(States states, State initialState, AlphabetSet alphabetSet, FinalStates finalStates, Transitions transitions) {
         this.states = states;
         this.initialState = initialState;
         this.alphabetSet = alphabetSet;
@@ -44,7 +44,7 @@ public class DFA {
     }
 
     private State findNextState(State currentState, Alphabet input) {
-        return transitions.get(currentState).get(input);
+        return transitions.get(currentState, input);
     }
 
     private boolean isValidInput(Alphabet[] inputs) {
