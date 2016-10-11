@@ -71,21 +71,21 @@ public class DFATest {
 
     @Test
     public void testIsRecognizeShouldReturnTrueForARecognizedInput() throws Exception {
-        DFA dfa = new DFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
+        DFA dfa = DFA.generateDFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
         Alphabet inputs[] = {alphabet1, alphabet1, alphabet1, alphabet1, alphabet0, alphabet2};
         assertTrue(dfa.isRecognize(inputs));
     }
 
     @Test
     public void testIsRecognizeShouldReturnFalseForANotRecognizedInput() throws Exception {
-        DFA dfa = new DFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
+        DFA dfa = DFA.generateDFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
         Alphabet inputs[] = {alphabet1, alphabet1, alphabet1, alphabet1, alphabet0, alphabet2, alphabet2};
         assertFalse(dfa.isRecognize(inputs));
     }
 
     @Test
     public void testIsRecognizeShouldThrowARuntimeExceptionForInvalidAlphabetInGivenInput() throws Exception {
-        DFA dfa = new DFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
+        DFA dfa = DFA.generateDFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
         Alphabet alphabet3 = new Alphabet("3");
         Alphabet inputs[] = {alphabet1, alphabet1, alphabet1, alphabet1, alphabet0, alphabet2, alphabet2, alphabet3};
         thrown.expect(RuntimeException.class);
@@ -94,7 +94,7 @@ public class DFATest {
     }
 
     @Test
-    public void testIsRecognizeShouldThrowARuntimeExceptionForInvalidStateInGivenTransitionTable() throws Exception {
+    public void testShouldThrowARuntimeExceptionForInvalidStateInGivenTransitionTable() throws Exception {
         Transition q3Transition = new Transition();
         q3Transition.put(alphabet0, q0);
         q3Transition.put(alphabet1, q1);
@@ -108,10 +108,8 @@ public class DFATest {
         transitions.put(q1State, transition);
         transitions.put(q3, q3Transition);
 
-        DFA dfa = new DFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
-        Alphabet inputs[] = {alphabet1, alphabet1, alphabet1, alphabet1, alphabet0, alphabet2, alphabet2};
         thrown.expect(RuntimeException.class);
         thrown.expectMessage("Please check your transitions table");
-        dfa.isRecognize(inputs);
+        DFA dfa = DFA.generateDFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
     }
 }

@@ -12,4 +12,8 @@ public class States {
     public boolean contains(State state) {
         return states.contains(state);
     }
+
+    public int size() {
+        return states.size();
+    }
 }

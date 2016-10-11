@@ -13,4 +13,8 @@ public class AlphabetSet {
     public boolean contains(Alphabet input) {
         return alphabets.contains(input);
     }
+
+    public int size() {
+        return alphabets.size();
+    }
 }

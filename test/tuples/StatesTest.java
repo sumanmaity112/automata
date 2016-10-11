@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -38,5 +39,12 @@ public class StatesTest {
     @Test
     public void testContainsShouldReturnFalseWhenDoesNotContainsGivenState() throws Exception {
         assertFalse(states.contains(new State("q3")));
+    }
+
+    @Test
+    public void testSizeShouldReturnTheNumberStates() throws Exception {
+        assertEquals(states.size(), 3);
+        States states = new States(new ArrayList<State>());
+        assertEquals(states.size(), 0);
     }
 }

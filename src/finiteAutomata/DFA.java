@@ -11,12 +11,19 @@ public class DFA {
     private final FinalStates finalStates;
     private Transitions transitions;
 
-    public DFA(States states, State initialState, AlphabetSet alphabetSet, FinalStates finalStates, Transitions transitions) {
+    private DFA(States states, State initialState, AlphabetSet alphabetSet, FinalStates finalStates, Transitions transitions) {
         this.states = states;
         this.initialState = initialState;
         this.alphabetSet = alphabetSet;
         this.finalStates = finalStates;
         this.transitions = transitions;
+    }
+
+    public static DFA generateDFA(States states, State initialState, AlphabetSet alphabetSet, FinalStates finalStates, Transitions transitions) {
+        if (!transitions.isValidDFATransitions(alphabetSet, states)) {
+            throw new RuntimeException("Please check your transitions table");
+        }
+        return new DFA(states, initialState, alphabetSet, finalStates, transitions);
     }
 
     public boolean isRecognize(Alphabet[] inputs) {
@@ -28,9 +35,6 @@ public class DFA {
         State currentState = initialState;
         for (Alphabet input : inputs) {
             currentState = findNextState(currentState, input);
-            if (!this.states.contains(currentState)) {
-                throw new RuntimeException("Please check your transitions table");
-            }
         }
         return finalStates.contains(currentState);
     }

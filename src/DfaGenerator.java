@@ -47,7 +47,7 @@ public class DfaGenerator {
         transitions.put(q2, q2Transition);
 
         Alphabet inputs[] = {alphabet1, alphabet1, alphabet1, alphabet1, alphabet0, alphabet2};
-        DFA dfa = new DFA(new States(states), q0, alphabetSet, new FinalStates(finalStates), transitions);
+        DFA dfa = DFA.generateDFA(new States(states), q0, alphabetSet, new FinalStates(finalStates), transitions);
 
         StringBuilder builder = new StringBuilder();
         for (Alphabet input : inputs) {

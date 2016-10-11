@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -14,10 +15,11 @@ public class AlphabetSetTest {
     private Alphabet alphabet0;
     private Alphabet alphabet1;
     private Alphabet alphabet2;
+    private ArrayList<Alphabet> alphabets;
 
     @Before
     public void setUp() throws Exception {
-        ArrayList<Alphabet> alphabets = new ArrayList<>();
+        alphabets = new ArrayList<>();
         alphabet0 = new Alphabet("0");
         alphabet1 = new Alphabet("1");
         alphabet2 = new Alphabet("2");
@@ -40,5 +42,14 @@ public class AlphabetSetTest {
     @Test
     public void testContainsShouldReturnFalseWhenDoesNotContainsGivenAlphabet() throws Exception {
         assertFalse(alphabetSet.contains(new Alphabet("3")));
+    }
+
+    @Test
+    public void testSizeShouldReturnTheNumberOfAlphabetInAlphabetSet() throws Exception {
+        assertEquals(alphabetSet.size(), 3);
+        alphabets.add(new Alphabet("3"));
+        AlphabetSet alphabetSet = new AlphabetSet(alphabets);
+        assertEquals(alphabetSet.size(), 4);
+
     }
 }
