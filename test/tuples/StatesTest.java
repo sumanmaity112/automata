@@ -32,6 +32,7 @@ public class StatesTest {
         assertTrue(states.contains(q0));
         assertTrue(states.contains(q1));
         assertTrue(states.contains(q2));
+        assertTrue(states.contains(new State("q2")));
     }
 
     @Test

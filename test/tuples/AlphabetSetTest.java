@@ -34,6 +34,7 @@ public class AlphabetSetTest {
         assertTrue(alphabetSet.contains(alphabet0));
         assertTrue(alphabetSet.contains(alphabet1));
         assertTrue(alphabetSet.contains(alphabet2));
+        assertTrue(alphabetSet.contains(new Alphabet("1")));
     }
 
     @Test
