@@ -1,5 +1,7 @@
 package finiteAutomata;
 
+import exceptions.InvalidInput;
+import exceptions.InvalidTransition;
 import tuples.*;
 
 import java.util.HashMap;
@@ -21,7 +23,7 @@ public class DFA {
 
     public static DFA generateDFA(States states, State initialState, AlphabetSet alphabetSet, FinalStates finalStates, Transitions transitions) {
         if (!transitions.isValidDFATransitions(alphabetSet, states)) {
-            throw new RuntimeException("Please check your transitions table");
+            throw new InvalidTransition("Please check your transitions table");
         }
         return new DFA(states, initialState, alphabetSet, finalStates, transitions);
     }
@@ -44,7 +46,7 @@ public class DFA {
         for (Alphabet input : inputs) {
             builder.append(input.toString());
         }
-        throw new RuntimeException("Please check input " + builder.toString());
+        throw new InvalidInput("Please check input " + builder.toString());
     }
 
     private State findNextState(State currentState, Alphabet input) {

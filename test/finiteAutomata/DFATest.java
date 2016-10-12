@@ -1,5 +1,7 @@
 package finiteAutomata;
 
+import exceptions.InvalidInput;
+import exceptions.InvalidTransition;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -88,7 +90,7 @@ public class DFATest {
         DFA dfa = DFA.generateDFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
         Alphabet alphabet3 = new Alphabet("3");
         Alphabet inputs[] = {alphabet1, alphabet1, alphabet1, alphabet1, alphabet0, alphabet2, alphabet2, alphabet3};
-        thrown.expect(RuntimeException.class);
+        thrown.expect(InvalidInput.class);
         thrown.expectMessage("Please check input 11110223");
         dfa.isRecognize(inputs);
     }
@@ -108,7 +110,7 @@ public class DFATest {
         transitions.put(q1State, transition);
         transitions.put(q3, q3Transition);
 
-        thrown.expect(RuntimeException.class);
+        thrown.expect(InvalidTransition.class);
         thrown.expectMessage("Please check your transitions table");
         DFA dfa = DFA.generateDFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
     }
