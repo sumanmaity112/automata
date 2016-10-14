@@ -10,13 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
-public class DfaInput {
-
-    private DfaInput() {
-
-    }
-
-    public static DFA generateDfa(JSONObject jsonObject) throws JSONException {
+public class DfaInputParser extends InputParser {
+    public DFA generateDfa(JSONObject jsonObject) throws JSONException {
         JSONObject tuple = jsonObject.getJSONObject("tuple");
         AlphabetSet alphabetSet = createAlphabetSet(tuple.getJSONArray("alphabets"));
         States states = createStates(tuple.getJSONArray("states"));
@@ -27,15 +22,15 @@ public class DfaInput {
         return DFA.generateDFA(states, initialState, alphabetSet, finalStates, transitions);
     }
 
-    private static FinalStates createFinalStates(JSONArray states) {
+    private FinalStates createFinalStates(JSONArray states) {
         return new FinalStates(createStateList(states));
     }
 
-    private static States createStates(JSONArray statesArray) {
+    private States createStates(JSONArray statesArray) {
         return new States(createStateList(statesArray));
     }
 
-    private static ArrayList<State> createStateList(JSONArray statesArray) {
+    private ArrayList<State> createStateList(JSONArray statesArray) {
         ArrayList<State> states = new ArrayList<>();
         for (int index = 0; index < statesArray.length(); index++) {
             states.add(new State(statesArray.getString(index)));
@@ -43,7 +38,7 @@ public class DfaInput {
         return states;
     }
 
-    private static AlphabetSet createAlphabetSet(JSONArray alphabets) {
+    private AlphabetSet createAlphabetSet(JSONArray alphabets) {
         ArrayList<Alphabet> alphabetSet = new ArrayList<>();
         for (int index = 0; index < alphabets.length(); index++) {
             alphabetSet.add(new Alphabet(alphabets.getString(index)));
@@ -51,7 +46,7 @@ public class DfaInput {
         return new AlphabetSet(alphabetSet);
     }
 
-    private static Transitions createTransitionTable(JSONObject delta) {
+    private Transitions createTransitionTable(JSONObject delta) {
         Transitions transitions = new Transitions();
         Set keySet = delta.keySet();
         for (Object next : keySet) {
@@ -62,7 +57,7 @@ public class DfaInput {
         return transitions;
     }
 
-    private static Transition createTransition(JSONObject jsonObject) {
+    private Transition createTransition(JSONObject jsonObject) {
         Iterator keys = jsonObject.keys();
         Transition transition = new Transition();
         while (keys.hasNext()) {
@@ -71,16 +66,4 @@ public class DfaInput {
         }
         return transition;
     }
-
-    public static Alphabet[] parseInputString(String inputs, String delimiter) {
-        ArrayList<Alphabet> alphabets = new ArrayList<>();
-        String[] inputsString = inputs.split(delimiter);
-
-        for (String input : inputsString) {
-            alphabets.add(new Alphabet(input));
-        }
-        return alphabets.toArray(new Alphabet[alphabets.size()]);
-    }
-
-    ;
 }
