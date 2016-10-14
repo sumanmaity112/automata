@@ -34,6 +34,9 @@ public class DFA {
     }
 
     private boolean isValid(Alphabet[] inputs) {
+        if (inputs.length == 1 && inputs[0].equals(new Alphabet(""))) {
+            return finalStates.contains(initialState);
+        }
         State currentState = initialState;
         for (Alphabet input : inputs) {
             currentState = findNextState(currentState, input);
@@ -54,6 +57,9 @@ public class DFA {
     }
 
     private boolean isValidInput(Alphabet[] inputs) {
+        if (inputs.length == 1 && inputs[0].equals(new Alphabet(""))) {
+            return true;
+        }
         for (Alphabet input : inputs) {
             if (!(alphabetSet.contains(input))) {
                 return false;
