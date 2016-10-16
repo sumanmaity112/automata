@@ -22,30 +22,6 @@ public class DfaInputParser extends InputParser {
         return DFA.generateDFA(states, initialState, alphabetSet, finalStates, transitions);
     }
 
-    private FinalStates createFinalStates(JSONArray states) {
-        return new FinalStates(createStateList(states));
-    }
-
-    private States createStates(JSONArray statesArray) {
-        return new States(createStateList(statesArray));
-    }
-
-    private ArrayList<State> createStateList(JSONArray statesArray) {
-        ArrayList<State> states = new ArrayList<>();
-        for (int index = 0; index < statesArray.length(); index++) {
-            states.add(new State(statesArray.getString(index)));
-        }
-        return states;
-    }
-
-    private AlphabetSet createAlphabetSet(JSONArray alphabets) {
-        ArrayList<Alphabet> alphabetSet = new ArrayList<>();
-        for (int index = 0; index < alphabets.length(); index++) {
-            alphabetSet.add(new Alphabet(alphabets.getString(index)));
-        }
-        return new AlphabetSet(alphabetSet);
-    }
-
     private Transitions createTransitionTable(JSONObject delta) {
         Transitions transitions = new Transitions();
         Set keySet = delta.keySet();
