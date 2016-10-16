@@ -4,8 +4,6 @@ import exceptions.InvalidInput;
 import exceptions.InvalidTransition;
 import tuples.*;
 
-import java.util.HashMap;
-
 public class DFA {
     private final States states;
     private final State initialState;
@@ -57,11 +55,8 @@ public class DFA {
     }
 
     private boolean isValidInput(Alphabet[] inputs) {
-        if (inputs.length == 1 && inputs[0].equals(new Alphabet(""))) {
-            return true;
-        }
         for (Alphabet input : inputs) {
-            if (!(alphabetSet.contains(input))) {
+            if (!input.equals(new Alphabet("")) && !(alphabetSet.contains(input))) {
                 return false;
             }
         }

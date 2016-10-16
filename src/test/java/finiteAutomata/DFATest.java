@@ -79,6 +79,21 @@ public class DFATest {
     }
 
     @Test
+    public void testIsRecognizeShouldReturnTrueWhenInitialStateIsFinalState() throws Exception {
+        DFA dfa = DFA.generateDFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
+        Alphabet inputs[] = {new Alphabet("")};
+        assertTrue(dfa.isRecognize(inputs));
+    }
+
+    @Test
+    public void testIsRecognizeShouldReturnFalseWhenInitialStateIsNotFinalState() throws Exception {
+        State initialState = new State("q1");
+        DFA dfa = DFA.generateDFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
+        Alphabet inputs[] = {new Alphabet("")};
+        assertFalse(dfa.isRecognize(inputs));
+    }
+
+    @Test
     public void testIsRecognizeShouldReturnFalseForANotRecognizedInput() throws Exception {
         DFA dfa = DFA.generateDFA(new States(states), initialState, alphabetSet, new FinalStates(finalStates), transitions);
         Alphabet inputs[] = {alphabet1, alphabet1, alphabet1, alphabet1, alphabet0, alphabet2, alphabet2};
