@@ -1,21 +1,13 @@
 package finiteAutomata;
 
-import exceptions.InvalidInput;
 import exceptions.InvalidTransition;
 import tuples.*;
 
-public class DFA {
-    private final States states;
-    private final State initialState;
-    private final AlphabetSet alphabetSet;
-    private final FinalStates finalStates;
+public class DFA extends FiniteAutomata {
     private Transitions transitions;
 
     private DFA(States states, State initialState, AlphabetSet alphabetSet, FinalStates finalStates, Transitions transitions) {
-        this.states = states;
-        this.initialState = initialState;
-        this.alphabetSet = alphabetSet;
-        this.finalStates = finalStates;
+        super(alphabetSet, initialState, states, finalStates);
         this.transitions = transitions;
     }
 
@@ -32,34 +24,18 @@ public class DFA {
     }
 
     private boolean isValid(Alphabet[] inputs) {
-        if (inputs.length == 1 && inputs[0].equals(new Alphabet(""))) {
-            return finalStates.contains(initialState);
+        if (isEmptyInput(inputs)) {
+            return isOnFinalState(initialState);
         }
         State currentState = initialState;
         for (Alphabet input : inputs) {
             currentState = findNextState(currentState, input);
         }
-        return finalStates.contains(currentState);
-    }
-
-    private boolean generateErrorMessage(Alphabet[] inputs) {
-        StringBuilder builder = new StringBuilder();
-        for (Alphabet input : inputs) {
-            builder.append(input.toString());
-        }
-        throw new InvalidInput("Please check input " + builder.toString());
+        return isOnFinalState(currentState);
     }
 
     private State findNextState(State currentState, Alphabet input) {
         return transitions.get(currentState, input);
     }
 
-    private boolean isValidInput(Alphabet[] inputs) {
-        for (Alphabet input : inputs) {
-            if (!input.equals(new Alphabet("")) && !(alphabetSet.contains(input))) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
