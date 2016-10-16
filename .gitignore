@@ -1,2 +1,4 @@
 # Created by .ignore support plugin (hsz.mob)
-*.class
+build
+.gradle
+lib
