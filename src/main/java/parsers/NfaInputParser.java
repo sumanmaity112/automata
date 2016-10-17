@@ -9,12 +9,8 @@ import java.util.Set;
 
 public class NfaInputParser extends InputParser {
     public NFA generateNfa(JSONObject jsonObject) {
-        JSONObject tuple = jsonObject.getJSONObject("tuple");
-        AlphabetSet alphabetSet = createAlphabetSet(tuple.getJSONArray("alphabets"));
-        States states = createStates(tuple.getJSONArray("states"));
-        FinalStates finalStates = createFinalStates(tuple.getJSONArray("final-states"));
-        State initialState = new State(tuple.get("start-state").toString());
-        NfaTransitions transitions = createTransitionTable(tuple.getJSONObject("delta"));
+        assignTuple(jsonObject);
+        NfaTransitions transitions = createTransitionTable(delta);
 
         return NFA.generateNFA(states, initialState, alphabetSet, finalStates, transitions);
     }

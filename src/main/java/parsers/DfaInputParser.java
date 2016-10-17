@@ -1,23 +1,17 @@
 package parsers;
 
 import finiteAutomata.DFA;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import tuples.*;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
 public class DfaInputParser extends InputParser {
     public DFA generateDfa(JSONObject jsonObject) throws JSONException {
-        JSONObject tuple = jsonObject.getJSONObject("tuple");
-        AlphabetSet alphabetSet = createAlphabetSet(tuple.getJSONArray("alphabets"));
-        States states = createStates(tuple.getJSONArray("states"));
-        FinalStates finalStates = createFinalStates(tuple.getJSONArray("final-states"));
-        State initialState = new State(tuple.get("start-state").toString());
-        Transitions transitions = createTransitionTable(tuple.getJSONObject("delta"));
+        assignTuple(jsonObject);
+        Transitions transitions = createTransitionTable(delta);
 
         return DFA.generateDFA(states, initialState, alphabetSet, finalStates, transitions);
     }

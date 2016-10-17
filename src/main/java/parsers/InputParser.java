@@ -1,11 +1,28 @@
 package parsers;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import tuples.*;
 
 import java.util.ArrayList;
 
 public abstract class InputParser {
+
+    protected AlphabetSet alphabetSet;
+    protected States states;
+    FinalStates finalStates;
+    State initialState;
+    JSONObject delta;
+
+    void assignTuple(JSONObject jsonObject){
+        JSONObject tuple = jsonObject.getJSONObject("tuple");
+        alphabetSet = createAlphabetSet(tuple.getJSONArray("alphabets"));
+        states = createStates(tuple.getJSONArray("states"));
+        finalStates = createFinalStates(tuple.getJSONArray("final-states"));
+        initialState = new State(tuple.get("start-state").toString());
+        delta = tuple.getJSONObject("delta");
+    }
+
     public Alphabet[] parseInputString(String inputs, String delimiter) {
         ArrayList<Alphabet> alphabets = new ArrayList<>();
         String[] inputsString = inputs.split(delimiter);
@@ -16,11 +33,11 @@ public abstract class InputParser {
         return alphabets.toArray(new Alphabet[alphabets.size()]);
     }
 
-    protected FinalStates createFinalStates(JSONArray states) {
+    private FinalStates createFinalStates(JSONArray states) {
         return new FinalStates(createStateList(states));
     }
 
-    protected States createStates(JSONArray statesArray) {
+    States createStates(JSONArray statesArray) {
         return new States(createStateList(statesArray));
     }
 
@@ -32,7 +49,7 @@ public abstract class InputParser {
         return states;
     }
 
-    protected AlphabetSet createAlphabetSet(JSONArray alphabets) {
+    private AlphabetSet createAlphabetSet(JSONArray alphabets) {
         ArrayList<Alphabet> alphabetSet = new ArrayList<>();
         for (int index = 0; index < alphabets.length(); index++) {
             alphabetSet.add(new Alphabet(alphabets.getString(index)));
