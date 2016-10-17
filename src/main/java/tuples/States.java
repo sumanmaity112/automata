@@ -16,4 +16,8 @@ public class States {
     public int size() {
         return states.size();
     }
+
+    public State getByIndex(int index) {
+        return states.get(index);
+    }
 }

@@ -15,6 +15,7 @@ public class NfaTransitions {
     }
 
     public States get(State state, Alphabet alphabet) {
-        return transitions.get(state).get(alphabet);
+        NfaTransition transition = transitions.get(state);
+        return transition == null ? null : transition.get(alphabet);
     }
 }

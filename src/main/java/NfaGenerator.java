@@ -16,9 +16,27 @@ public class NfaGenerator {
 
             JSONObject stateMachineInfo = (JSONObject) jsonArray.get(index);
             NFA nfa = nfaInputParser.generateNfa(stateMachineInfo);
+
+            System.out.println("This " + stateMachineInfo.getString("type").toUpperCase() + " \"" + stateMachineInfo.getString("name") + "\" should pass for following inputs");
+            validate(stateMachineInfo, "pass-cases", nfa, nfaInputParser);
+
+
+            System.out.println("This " + stateMachineInfo.getString("type").toUpperCase() + " \"" + stateMachineInfo.getString("name") + "\" should fail for following inputs");
+            validate(stateMachineInfo, "fail-cases", nfa, nfaInputParser);
         }
     }
 
+    private static boolean validate(JSONObject stateMachineInfo, String fieldName, NFA nfa, NfaInputParser nfaInputParser) {
+        JSONArray jsonArray = stateMachineInfo.getJSONArray(fieldName);
+        for (int index = 0; index < jsonArray.length(); index++) {
+            Alphabet[] inputs = nfaInputParser.parseInputString(jsonArray.get(index).toString(), "");
+            String message = "       " + InputReader.generateMessage(inputs);
+
+            message += (nfa.isRecognize(inputs) ? "" : "not ") + "recognized";
+            System.out.println(message);
+        }
+        return false;
+    }
 
 
 }
