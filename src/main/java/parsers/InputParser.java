@@ -57,7 +57,7 @@ public abstract class InputParser {
         return new AlphabetSet(alphabetSet);
     }
 
-    public String parseJSONString(String jsonString) {
+    public static String parseJSONString(String jsonString) {
         if (jsonString.startsWith("\"") && jsonString.endsWith("\"")) {
             jsonString = jsonString.substring(1, jsonString.length() - 1);
             jsonString = jsonString.replaceAll("\\\\\"", "\"");
