@@ -1,17 +1,16 @@
 package validator;
 
 import finiteAutomata.NFA;
+import messageService.MessageGenerator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import parsers.NfaInputParser;
 import tuples.Alphabet;
 
-public class NfaValidator implements Validator {
-    private JSONObject stateMachineInfo;
+public class NfaValidator extends Validator {
 
     public NfaValidator(JSONObject stateMachineInfo) {
-
-        this.stateMachineInfo = stateMachineInfo;
+        super(stateMachineInfo);
     }
 
     @Override
@@ -19,21 +18,18 @@ public class NfaValidator implements Validator {
         NfaInputParser nfaInputParser = new NfaInputParser();
         NFA nfa = nfaInputParser.generateNfa(stateMachineInfo);
 
-        System.out.println(ValidatorMessageService.validateMessage(stateMachineInfo.getString("type"),stateMachineInfo.getString("name"), "pass"));
-        validate(stateMachineInfo, "pass-cases", nfa, nfaInputParser);
+        System.out.println(MessageGenerator.generateValidationMessage(stateMachineInfo.getString("type"), stateMachineInfo.getString("name"), "pass"));
+        validate(stateMachineInfo.getJSONArray("pass-cases"), nfa, nfaInputParser);
 
-        System.out.println(ValidatorMessageService.validateMessage(stateMachineInfo.getString("type"),stateMachineInfo.getString("name"), "fail"));
-        validate(stateMachineInfo, "fail-cases", nfa, nfaInputParser);
+        System.out.println(MessageGenerator.generateValidationMessage(stateMachineInfo.getString("type"), stateMachineInfo.getString("name"), "fail"));
+        validate(stateMachineInfo.getJSONArray("fail-cases"), nfa, nfaInputParser);
     }
 
-    private static boolean validate(JSONObject stateMachineInfo, String fieldName, NFA nfa, NfaInputParser nfaInputParser) {
-        JSONArray jsonArray = stateMachineInfo.getJSONArray(fieldName);
+    private boolean validate(JSONArray jsonArray, NFA nfa, NfaInputParser nfaInputParser) {
         for (int index = 0; index < jsonArray.length(); index++) {
             Alphabet[] inputs = nfaInputParser.parseInputString(jsonArray.get(index).toString(), "");
-            String message = ValidatorMessageService.generateIntermediateMessage("       ", ValidatorMessageService.generateMessage(inputs), " is ");
-
-            message += (nfa.isRecognize(inputs) ? "" : "not ") + "recognized";
-            System.out.println(message);
+            String message = MessageGenerator.generateIntermediateMessage(MessageGenerator.inputAsString(inputs), " is ");
+            System.out.println(generatePrintableMessage(nfa.isRecognize(inputs), message));
         }
         return false;
     }

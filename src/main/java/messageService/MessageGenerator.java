@@ -1,9 +1,9 @@
-package validator;
+package messageService;
 
 import tuples.Alphabet;
 
-public class ValidatorMessageService {
-    public static String generateMessage(Alphabet[] inputs) {
+public class MessageGenerator {
+    public static String inputAsString(Alphabet[] inputs) {
         StringBuilder builder = new StringBuilder();
         for (Alphabet input : inputs) {
             builder.append(input.toString());
@@ -15,12 +15,11 @@ public class ValidatorMessageService {
         return inputsAsString;
     }
 
-    public static String validateMessage(String type, String name, String flag) {
+    public static String generateValidationMessage(String type, String name, String flag) {
         return "This " + type.toUpperCase() + " \"" + name + "\" should " + flag + " for following inputs";
-
     }
 
-    public static String generateIntermediateMessage(String prefix, String inputs, String suffix) {
-        return " " + prefix + " " + inputs + " " + suffix;
+    public static String generateIntermediateMessage(String inputs, String suffix) {
+        return "     " + " " + inputs + " " + suffix;
     }
 }

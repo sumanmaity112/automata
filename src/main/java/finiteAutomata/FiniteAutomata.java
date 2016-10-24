@@ -1,6 +1,7 @@
 package finiteAutomata;
 
 import exceptions.InvalidInput;
+import messageService.MessageGenerator;
 import tuples.*;
 
 public abstract class FiniteAutomata {
@@ -17,11 +18,7 @@ public abstract class FiniteAutomata {
     }
 
     protected boolean generateErrorMessage(Alphabet[] inputs) {
-        StringBuilder builder = new StringBuilder();
-        for (Alphabet input : inputs) {
-            builder.append(input.toString());
-        }
-        throw new InvalidInput("Please check input " + builder.toString());
+        throw new InvalidInput("Please check input " + MessageGenerator.inputAsString(inputs));
     }
 
     protected boolean isValidInput(Alphabet[] inputs) {
